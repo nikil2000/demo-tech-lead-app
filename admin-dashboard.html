@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SLT Tech-Lead Platform</title>
+    <link rel="stylesheet" href="admin-dashboard-styles.css">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div class="screen active" id="adminLoginScreen">
+        <div class="login-container">
+            <div class="logo-container">
+                <!-- TODO: Replace 'slt-logo.png' with actual SLT logo (2:1 ratio) -->
+                <img src="slt-logo.png" alt="SLT Logo" class="logo">
+                <h1 class="app-title">Admin Dashboard</h1>
+                <p class="app-subtitle">Tech-Lead Partner Management</p>
+            </div>
+
+            <div class="login-card">
+                <div class="card-glow"></div>
+                <h2>Admin Access</h2>
+                <p class="login-subtitle">Sign in to manage jobs and partners</p>
+
+                <form class="login-form" onsubmit="return adminLogin(event)">
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <input type="text" placeholder="Admin ID or Email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <span>Sign In</span>
+                        <div class="btn-shine"></div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div class="screen" id="adminDashboardScreen">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <!-- TODO: Replace 'slt-logo-small.png' with actual SLT logo (2:1 ratio) -->
+                <img src="slt-logo-small.png" alt="SLT" class="sidebar-logo">
+                <h3>Admin Panel</h3>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-link active" onclick="showSection('overview')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Overview</span>
+                </button>
+
+                <button class="nav-link" onclick="showSection('jobs')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                    </svg>
+                    <span>Jobs</span>
+                </button>
+
+                <button class="nav-link" onclick="showSection('approval')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 11 12 14 22 4"></polyline>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <span>Approvals</span>
+                    <span class="badge">5</span>
+                </button>
+
+                <button class="nav-link" onclick="showSection('partners')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Partners</span>
+                </button>
+
+                <button class="nav-link" onclick="showSection('reports')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span>Reports</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-profile">
+                    <div class="admin-avatar">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="admin-info">
+                        <p class="admin-name">Admin User</p>
+                        <p class="admin-role">Business Support</p>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="content-header">
+                <div>
+                    <h1 id="sectionTitle">Dashboard Overview</h1>
+                    <p id="sectionSubtitle">Monitor and manage all tech-lead partner activities</p>
+                </div>
+                <button class="btn-create" onclick="showCreateJobModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Create New Job
+                </button>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="content-section active" id="overviewSection">
+                <!-- Stats Grid -->
+                <div class="stats-grid-admin">
+                    <div class="stat-card-admin stat-blue">
+                        <div class="stat-header">
+                            <div class="stat-icon-admin">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                </svg>
+                            </div>
+                            <p class="stat-label-admin">Total Jobs</p>
+                        </div>
+                        <h2 class="stat-value-admin">156</h2>
+                        <div class="stat-trend positive">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            </svg>
+                            <span>+12% from last month</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-admin stat-orange">
+                        <div class="stat-header">
+                            <div class="stat-icon-admin">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <p class="stat-label-admin">Pending Approval</p>
+                        </div>
+                        <h2 class="stat-value-admin">5</h2>
+                        <div class="stat-trend">
+                            <span>Requires attention</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-admin stat-green">
+                        <div class="stat-header">
+                            <div class="stat-icon-admin">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <p class="stat-label-admin">Completed</p>
+                        </div>
+                        <h2 class="stat-value-admin">124</h2>
+                        <div class="stat-trend positive">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            </svg>
+                            <span>+8% completion rate</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-admin stat-purple">
+                        <div class="stat-header">
+                            <div class="stat-icon-admin">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                </svg>
+                            </div>
+                            <p class="stat-label-admin">Active Partners</p>
+                        </div>
+                        <h2 class="stat-value-admin">42</h2>
+                        <div class="stat-trend positive">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            </svg>
+                            <span>+3 new this week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card-container">
+                    <div class="card-header">
+                        <h3>Recent Activity</h3>
+                        <button class="btn-text">View All</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon activity-success">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-title">Job #JOB-2024-045 approved</p>
+                                <p class="activity-meta">CCTV Installation - Colombo 07 • 5 minutes ago</p>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon activity-info">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-title">New job created #JOB-2024-046</p>
+                                <p class="activity-meta">Wi-Fi Mesh - Kandy • 15 minutes ago</p>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon activity-warning">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-title">Partner raised issue on #JOB-2024-042</p>
+                                <p class="activity-meta">Equipment shortage reported • 1 hour ago</p>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon activity-success">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-title">Job #JOB-2024-043 completed</p>
+                                <p class="activity-meta">PABX Installation - Gampaha • 2 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Section -->
+            <div class="content-section" id="jobsSection">
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="search-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input type="text" placeholder="Search jobs...">
+                        </div>
+                        <div class="table-filters">
+                            <select class="filter-select">
+                                <option>All Status</option>
+                                <option>Assigned</option>
+                                <option>In Progress</option>
+                                <option>Pending Approval</option>
+                                <option>Completed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Job ID</th>
+                                <th>Service Type</th>
+                                <th>Location</th>
+                                <th>Partner</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="job-id-link">#JOB-2024-001</span></td>
+                                <td>CCTV Installation</td>
+                                <td>Colombo 07</td>
+                                <td>Kamal Silva</td>
+                                <td><span class="status-badge status-assigned">Assigned</span></td>
+                                <td>LKR 15,000</td>
+                                <td>
+                                    <button class="btn-icon" title="View Details">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="job-id-link">#JOB-2024-002</span></td>
+                                <td>Wi-Fi Mesh</td>
+                                <td>Kandy</td>
+                                <td>Nimal Perera</td>
+                                <td><span class="status-badge status-progress">In Progress</span></td>
+                                <td>LKR 12,500</td>
+                                <td>
+                                    <button class="btn-icon" title="View Details">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="job-id-link">#JOB-2024-003</span></td>
+                                <td>PABX Installation</td>
+                                <td>Gampaha</td>
+                                <td>Sunil Fernando</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>LKR 20,000</td>
+                                <td>
+                                    <button class="btn-icon" title="View Details">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Approval Section -->
+            <div class="content-section" id="approvalSection">
+                <div class="approval-grid">
+                    <!-- Approval Card 1 -->
+                    <div class="approval-card">
+                        <div class="approval-header">
+                            <span class="job-id-badge">#JOB-2024-003</span>
+                            <span class="time-badge">2 hours ago</span>
+                        </div>
+                        <h3 class="approval-title">PABX Installation</h3>
+                        <p class="approval-location">📍 Gampaha, Negombo</p>
+                        <p class="approval-partner">👤 Partner: Sunil Fernando</p>
+
+                        <div class="approval-images">
+                            <div class="image-placeholder">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                <p>3 Photos</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                <p>2 Documents</p>
+                            </div>
+                        </div>
+
+                        <div class="approval-actions">
+                            <button class="btn-approve" onclick="approveJob(3)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Approve
+                            </button>
+                            <button class="btn-reject" onclick="rejectJob(3)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                                Reject
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- More approval cards would go here -->
+                    <div class="approval-card">
+                        <div class="approval-header">
+                            <span class="job-id-badge">#JOB-2024-005</span>
+                            <span class="time-badge">5 hours ago</span>
+                        </div>
+                        <h3 class="approval-title">Network Cabling</h3>
+                        <p class="approval-location">📍 Colombo 03, Kollupitiya</p>
+                        <p class="approval-partner">👤 Partner: Ravi Kumar</p>
+
+                        <div class="approval-images">
+                            <div class="image-placeholder">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                <p>5 Photos</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                <p>1 Document</p>
+                            </div>
+                        </div>
+
+                        <div class="approval-actions">
+                            <button class="btn-approve" onclick="approveJob(5)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Approve
+                            </button>
+                            <button class="btn-reject" onclick="rejectJob(5)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                                Reject
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-dashboard-script.js"></script>
+</body>
+
+</html>
